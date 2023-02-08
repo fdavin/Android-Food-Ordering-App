@@ -1,13 +1,13 @@
-package com.majika.ui.notifications
+package com.majika.ui.restoran
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class RestoranViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is restoran Fragment"
     }
     val text: LiveData<String> = _text
 }

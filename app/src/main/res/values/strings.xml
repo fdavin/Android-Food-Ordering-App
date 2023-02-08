@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">majika</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_twibbon">Twibbon</string>
+    <string name="title_restoran">Restoran</string>
+    <string name="title_menu">Menu</string>
+    <string name="title_keranjang">Keranjang</string>
+    <string name="title_pembayaran">Pembayaran</string>
 </resources>
