@@ -13,7 +13,7 @@ class BranchAdapter (private val data: ArrayList<BranchData>): RecyclerView.Adap
             with(itemView){
                 val text = "${branchData.name}\n\n"+
                         "${branchData.address}\n" +
-                        "${branchData.phone}"
+                        branchData.phone_number
                 val tvBranch = findViewById<TextView>(R.id.tvBranch)
                 tvBranch.text = text
             }

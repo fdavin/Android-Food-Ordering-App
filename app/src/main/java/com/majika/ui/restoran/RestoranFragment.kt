@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import retrofit2.Callback
 import com.majika.api.RetrofitClient
@@ -38,22 +36,20 @@ class RestoranFragment : Fragment() {
         _binding = FragmentRestoranBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textRestoran
-        restoranViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        binding.rvBranch.setHasFixedSize(true)
-        binding.rvBranch.layoutManager = LinearLayoutManager(context)
+        val rvBranch = binding.rvBranch
+        rvBranch.setHasFixedSize(true)
+        rvBranch.layoutManager = LinearLayoutManager(context)
 
+        // Get API
         RetrofitClient.instance.getBranch().enqueue(object: Callback<BranchResponse>{
             override fun onResponse(
                 call: Call<BranchResponse>,
                 response: Response<BranchResponse>
             ) {
                 val responseCode = response.code()
-                response.body()?.let {list.addAll(it.data)}
+                response.body()?.let { list.addAll(it.data) }
                 val adapter = BranchAdapter(list)
-                binding.rvBranch.adapter = adapter
+                rvBranch.adapter = adapter
             }
 
             override fun onFailure(call: Call<BranchResponse>, t: Throwable) {
