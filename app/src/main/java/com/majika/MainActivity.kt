@@ -1,5 +1,6 @@
 package com.majika
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.majika.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -31,5 +33,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Temporary QR Code Scanner Button (Pembayaran)
+        val bayarBtn = findViewById<FloatingActionButton>(R.id.qr_code_scanner_btn)
+        bayarBtn.setOnClickListener {
+            val i = Intent(this, PembayaranActivity::class.java)
+            startActivity(i)
+        }
     }
 }
