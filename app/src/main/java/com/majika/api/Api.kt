@@ -16,5 +16,5 @@ interface Api {
     fun getFoodMenu(): Call<MenuResponse>
 
     @GET("v1/menu/drink")
-    fun  getDrinkMenu(): Call<MenuResponse>
+    fun getDrinkMenu(): Call<MenuResponse>
 }
