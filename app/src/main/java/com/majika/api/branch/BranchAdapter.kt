@@ -2,7 +2,6 @@ package com.majika.api.branch
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ class BranchAdapter (private val data: ArrayList<BranchData>): RecyclerView.Adap
 
                 val buttonBranch = findViewById<Button>(R.id.buttonBranch)
                 buttonBranch.setOnClickListener{
-                    val gmmIntentUri = Uri.parse("geo:${branchData.latitude},${branchData.longitude}")
+                    val gmmIntentUri = Uri.parse("geo:${branchData.latitude},${branchData.longitude}?q=${Uri.encode(branchData.address)}, ${Uri.encode(branchData.name)}")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     startActivity(it.context,mapIntent, null)
