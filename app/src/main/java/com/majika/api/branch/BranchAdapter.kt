@@ -15,9 +15,12 @@ class BranchAdapter (private val data: ArrayList<BranchData>): RecyclerView.Adap
     inner class BranchViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView){
         fun bind(branchData: BranchData){
             with(itemView){
-                val text = "${branchData.name}\n\n"+
+                val text =
                         "${branchData.address}\n" +
                         branchData.phone_number
+
+                val tvBranchName = findViewById<TextView>(R.id.tvBranchName)
+                tvBranchName.text = "${branchData.name}"
                 val tvBranch = findViewById<TextView>(R.id.tvBranch)
                 tvBranch.text = text
 

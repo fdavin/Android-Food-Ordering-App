@@ -19,13 +19,13 @@ class MenuAdapter(private val data: ArrayList<MenuData>): RecyclerView.Adapter<M
                     "${menuData.sold}"
                 }
                 val text = """
-                    ${menuData.name}
                     Rp ${menuData.price}
                     $terjual Terjual
                     
                     ${menuData.description}
                 """.trimIndent()
-
+                val tvMenuName = findViewById<TextView>(R.id.tvMenuName)
+                tvMenuName.text = "${menuData.name}"
                 val tvMenu = findViewById<TextView>(R.id.tvMenu)
                 tvMenu.text = text
             }
