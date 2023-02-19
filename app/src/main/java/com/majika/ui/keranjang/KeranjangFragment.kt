@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.majika.api.cart.CartAdapter
 import com.majika.databinding.FragmentKeranjangBinding
 
 class KeranjangFragment : Fragment() {
@@ -16,22 +17,22 @@ class KeranjangFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    private lateinit var cartViewModel: CartViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val keranjangViewModel =
-            ViewModelProvider(this).get(KeranjangViewModel::class.java)
-
         _binding = FragmentKeranjangBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textKeranjang
-        keranjangViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val rvKeranjang = binding.rvKeranjang
+        rvKeranjang.layoutManager = LinearLayoutManager(context)
+        cartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+
+        // Set adapter to the RecyclerView
+        rvKeranjang.adapter = CartAdapter(cartViewModel)
+
         return root
     }
 
