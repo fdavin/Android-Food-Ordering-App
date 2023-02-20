@@ -9,3 +9,13 @@ data class CartItem(
     val price: Int,
     var quantity: Int = 1,
 )
+
+fun List<CartItem>.asDomainModel(): ArrayList<CartItem> {
+    return map {
+        CartItem(
+            name = it.name,
+            price = it.price,
+            quantity = it.quantity)
+    } as ArrayList<CartItem>
+}
+

@@ -1,32 +1,42 @@
 package com.majika.api.cart
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import android.provider.CalendarContract.Instances
+import androidx.room.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+
+@Dao
+interface CartDao {
+    @Query("SELECT * FROM cart_items")
+    fun getAll(): LiveData<List<CartItem>>
+    @Query("SELECT * FROM cart_items WHERE name = :name")
+    fun getByName(name: String): CartItem?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(item: CartItem)
+
+    @Delete
+    fun delete(item: CartItem)
+
+    @Query("DELETE FROM cart_items")
+    fun deleteAll()
+}
 
 @Database(entities = [CartItem::class], version = 1)
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartItemDao(): CartDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: CartDatabase? = null
-
-        fun getDatabase(context: Context): CartDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    CartDatabase::class.java,
-                    "cart_items"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
+}
+private lateinit var INSTANCE: CartDatabase
+fun getDatabase(context: Context): CartDatabase {
+    synchronized(CartDatabase::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                CartDatabase::class.java,
+                "cart_items"
+            ).build()
         }
     }
+    return INSTANCE
 }

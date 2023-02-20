@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
+import com.majika.api.cart.CartDatabase
 import com.majika.api.cart.CartItem
 import com.majika.ui.keranjang.CartViewModel
 
@@ -32,14 +33,12 @@ class MenuAdapter(private val data: ArrayList<MenuData>, private val viewModel: 
                 tvMenuName.text = "${menuData.name}"
                 val tvMenu = findViewById<TextView>(R.id.tvMenu)
                 tvMenu.text = text
-            }
-            val btnAddToCart = itemView.findViewById<Button>(R.id.btnAddToCart)
-            btnAddToCart.setOnClickListener {
-                // Create a new CartItem object from the MenuData object
-                val cartItem = CartItem(menuData.name, menuData.price, 1)
-                // Call the addItem function in the CartRepository to add the item to the shopping cart
-                // Note: You'll need to get the CartRepository instance in the activity/fragment and pass it to the MenuAdapter
-                viewModel.addItem(cartItem)
+                val btnAddToCart = itemView.findViewById<Button>(R.id.btnAddToCart)
+                btnAddToCart.setOnClickListener {
+                    val cartItem = CartItem(menuData.name, menuData.price, 1)
+                    viewModel.addItem(cartItem)
+                }
+
             }
         }
     }

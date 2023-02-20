@@ -1,23 +1,15 @@
 package com.majika.ui.keranjang
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import com.majika.api.cart.CartRepository
-import androidx.lifecycle.viewModelScope
-import com.majika.api.cart.CartDatabase
-import com.majika.api.cart.CartItem
+import androidx.lifecycle.*
+import com.majika.api.cart.*
 import kotlinx.coroutines.launch
 
 class CartViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: CartRepository
-    val allItems: LiveData<List<CartItem>>
+    private val repository = CartRepository(getDatabase(application))
 
-    init {
-        val cartItemDao = CartDatabase.getDatabase(application).cartItemDao()
-        repository = CartRepository(cartItemDao)
-        allItems = repository.allItems
-    }
+    val keranjang = repository.keranjang
+    private val _playlist = MutableLiveData<List<CartItem>>()
 
     fun addItem(item: CartItem) = viewModelScope.launch {
         repository.addItem(item)
@@ -31,7 +23,17 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         repository.removeAllItems()
     }
 
+
     suspend fun getItemByName(Name: String): CartItem? {
         return repository.getItemByName(Name)
+    }
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(CartViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return CartViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
     }
 }
