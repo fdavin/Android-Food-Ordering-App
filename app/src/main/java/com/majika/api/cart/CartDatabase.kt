@@ -21,6 +21,12 @@ interface CartDao {
 
     @Query("DELETE FROM cart_items")
     fun deleteAll()
+
+    @Query("SELECT SUM(quantity*price) FROM cart_items")
+    fun getTotal() : LiveData<Int>
+
+    @Update
+    fun update(item: CartItem)
 }
 
 @Database(entities = [CartItem::class], version = 1)

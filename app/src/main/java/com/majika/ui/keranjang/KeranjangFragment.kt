@@ -5,14 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.majika.R
 import com.majika.api.cart.CartAdapter
 import com.majika.api.cart.CartItem
 import com.majika.databinding.FragmentKeranjangBinding
+
 
 class KeranjangFragment : Fragment() {
 
@@ -71,6 +74,13 @@ class KeranjangFragment : Fragment() {
             }
         })
         recyclerView.adapter = adapter
+
+        val total: TextView = requireView().findViewById<TextView>(R.id.Total) as TextView
+        val TotalObserver = Observer<Int> { newTotal ->
+            // Update the UI, in this case, a TextView.
+            total.text = "Total: Rp ${newTotal}"
+        }
+        model.total.observe(viewLifecycleOwner,TotalObserver)
     }
     override fun onDestroyView() {
         super.onDestroyView()

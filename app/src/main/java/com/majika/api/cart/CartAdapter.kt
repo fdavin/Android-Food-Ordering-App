@@ -30,7 +30,7 @@ class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), priv
                 val nameTextView: TextView = itemView.findViewById(R.id.tvCartItemName)
                 nameTextView.text = item.name
                 val priceTextView: TextView = itemView.findViewById(R.id.tvCartItemPrice)
-                priceTextView.text = item.price.toString()
+                priceTextView.text = "Rp ${item.price}"
                 val quantityTextView: TextView = itemView.findViewById(R.id.tvCartItemQuantity)
                 quantityTextView.text = item.quantity.toString()
                 val addButton: Button = itemView.findViewById(R.id.btnIncreaseQuantity)
@@ -38,13 +38,13 @@ class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), priv
 
                 addButton.setOnClickListener {
                     item.quantity++
-                    viewModel.addItem(item)
+                    viewModel.updateItem(item)
                 }
 
                 removeButton.setOnClickListener {
                     if (item.quantity > 1) {
                         item.quantity--
-                        viewModel.addItem(item)
+                        viewModel.updateItem(item)
                     } else {
                         viewModel.removeItem(item)
                     }
@@ -61,7 +61,6 @@ class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), priv
         val item = keranjang[position]
         holder.bind(item)
     }
-
     override fun getItemCount(): Int {
         return keranjang.size
     }

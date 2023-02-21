@@ -10,7 +10,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
 
     val keranjang = repository.keranjang
     private val _playlist = MutableLiveData<List<CartItem>>()
-
+    val total = repository.total
     fun addItem(item: CartItem) = viewModelScope.launch {
         repository.addItem(item)
     }
@@ -23,7 +23,9 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         repository.removeAllItems()
     }
 
-
+    fun updateItem(item: CartItem) = viewModelScope.launch {
+        repository.updateItem(item)
+    }
     suspend fun getItemByName(Name: String): CartItem? {
         return repository.getItemByName(Name)
     }
