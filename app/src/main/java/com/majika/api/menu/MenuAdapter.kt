@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 import com.majika.api.cart.CartItem
@@ -37,6 +38,7 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                     btnAddToCart.setOnClickListener {
                         val cartItem = CartItem(menuData.name, menuData.price, 1)
                         viewModel.addItem(cartItem)
+                        Toast.makeText(context, "${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
                     }
                 } else{
                     val tvMenuName = findViewById<TextView>(R.id.tvMinumName)
@@ -47,6 +49,7 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                     btnAddToCart.setOnClickListener {
                         val cartItem = CartItem(menuData.name, menuData.price, 1)
                         viewModel.addItem(cartItem)
+                        Toast.makeText(context, "${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
