@@ -2,7 +2,10 @@ package com.majika
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -10,15 +13,17 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.google.zxing.BarcodeFormat
+import com.majika.ui.keranjang.CartViewModel
 
 class PembayaranActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
+    private lateinit var model: CartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pembayaran)
         val scannerView = findViewById<CodeScannerView>(R.id.scanner_view)
-
+        model = ViewModelProvider(this).get(CartViewModel::class.java)
         codeScanner = CodeScanner(this, scannerView)
 
         // Parameters (default values)
@@ -48,7 +53,12 @@ class PembayaranActivity : AppCompatActivity() {
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
-
+        val total: TextView = findViewById<TextView>(R.id.total) as TextView
+        val TotalObserver = Observer<Int> { newTotal ->
+            // Update the UI, in this case, a TextView.
+            total.text = "Total: Rp ${newTotal}"
+        }
+        model.total.observe(this,TotalObserver)
         supportActionBar?.title = "Pembayaran"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
