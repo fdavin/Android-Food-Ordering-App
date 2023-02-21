@@ -15,15 +15,15 @@
 
         <TextView
             android:id="@+id/tvCartItemName"
-            android:layout_width="236dp"
-            android:layout_height="46dp"
+            android:layout_width="274dp"
+            android:layout_height="27dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Product Name"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,32 +32,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginBottom="10dp"
             android:text="Price: $9.99"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnIncreaseQuantity"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="52dp"
-            android:background="@drawable/button"
-            android:contentDescription="Increase Quantity"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/tvCartItemName" />
 
         <Button
             android:id="@+id/btnDecreaseQuantity"
-            android:layout_width="50dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="52dp"
+            android:layout_width="32dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="34dp"
             android:background="@drawable/minus_button"
             android:contentDescription="Decrease Quantity"
             android:textSize="24sp"
@@ -66,18 +51,29 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+        <Button
+            android:id="@+id/btnIncreaseQuantity"
+            android:layout_width="33dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/button"
+            android:contentDescription="Increase Quantity"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
         <TextView
             android:id="@+id/tvCartItemQuantity"
-            android:layout_width="52dp"
-            android:layout_height="75dp"
+            android:layout_width="45dp"
+            android:layout_height="58dp"
             android:layout_marginStart="4dp"
             android:text="1"
             android:textColor="#FFFFFF"
             android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnIncreaseQuantity"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            tools:layout_editor_absoluteY="7dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

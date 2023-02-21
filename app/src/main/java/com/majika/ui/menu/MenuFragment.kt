@@ -5,20 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.majika.api.RetrofitClient
 import com.majika.api.cart.CartAdapter
-import com.majika.api.cart.CartItem
 import com.majika.api.menu.MenuAdapter
 import com.majika.api.menu.MenuData
 import com.majika.api.menu.MenuResponse
 import com.majika.databinding.FragmentMenuBinding
+import com.majika.ui.keranjang.CartViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.majika.ui.keranjang.CartViewModel
+
 
 class MenuFragment : Fragment() {
 
@@ -28,6 +28,7 @@ class MenuFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val list = ArrayList<MenuData>()
+    private val drinklist = ArrayList<MenuData>()
     private val viewModel: CartViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
@@ -59,16 +60,24 @@ class MenuFragment : Fragment() {
         rvMenu.layoutManager = LinearLayoutManager(context)
 
         // Get API
-        RetrofitClient.instance.getMenu().enqueue(object: Callback<MenuResponse>{
+        RetrofitClient.instance.getFoodMenu().enqueue(object: Callback<MenuResponse>{
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 response.body()?.let { list.addAll(it.data) }
-                rvMenu.adapter = MenuAdapter(list, viewModel)
+                rvMenu.adapter = MenuAdapter(list,viewModel)
             }
-
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
-
             }
-
+        })
+        val rvMinum = binding.rvMinum
+        rvMinum.setHasFixedSize(true)
+        rvMinum.layoutManager = LinearLayoutManager(context)
+        RetrofitClient.instance.getDrinkMenu().enqueue(object: Callback<MenuResponse>{
+            override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
+                response.body()?.let { drinklist.addAll(it.data) }
+                rvMinum.adapter = MenuAdapter(drinklist,viewModel)
+            }
+            override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
+            }
         })
 
         return root

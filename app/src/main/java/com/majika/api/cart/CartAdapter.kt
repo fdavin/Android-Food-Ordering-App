@@ -44,6 +44,7 @@ class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), priv
                 removeButton.setOnClickListener {
                     if (item.quantity > 1) {
                         item.quantity--
+                        viewModel.addItem(item)
                     } else {
                         viewModel.removeItem(item)
                     }
