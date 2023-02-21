@@ -78,7 +78,11 @@ class KeranjangFragment : Fragment() {
         val total: TextView = requireView().findViewById<TextView>(R.id.Total) as TextView
         val TotalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
-            total.text = "Total: Rp ${newTotal}"
+            if (newTotal==null){
+                total.text = "Total: Rp 0"
+            } else {
+                total.text = "Total: Rp ${newTotal}"
+            }
         }
         model.total.observe(viewLifecycleOwner,TotalObserver)
     }
