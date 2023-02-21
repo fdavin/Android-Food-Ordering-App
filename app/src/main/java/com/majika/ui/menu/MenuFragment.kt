@@ -1,13 +1,14 @@
 package com.majika.ui.menu
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.majika.R
 import com.majika.api.RetrofitClient
 import com.majika.api.cart.CartAdapter
 import com.majika.api.menu.MenuAdapter
@@ -21,7 +22,8 @@ import retrofit2.Response
 
 
 class MenuFragment : Fragment() {
-
+    lateinit var rvMenu: RecyclerView
+    lateinit var rvMinum: RecyclerView
     private var _binding: FragmentMenuBinding? = null
 
     // This property is only valid between onCreateView and
@@ -46,12 +48,16 @@ class MenuFragment : Fragment() {
             }
         })*/
     }
+
+    override fun onCreate(savedInstanceState: Bundle?){
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -83,6 +89,59 @@ class MenuFragment : Fragment() {
         return root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+
+        val searchItem: MenuItem = menu.findItem(R.id.actionSearch)
+        val searchView: SearchView = searchItem.getActionView() as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(msg: String): Boolean {
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                filter(msg)
+                return false
+            }
+        })
+        return
+    }
+    private fun filter(text: String) {
+        // creating a new array list to filter our data.
+        val filteredlist: ArrayList<MenuData> = ArrayList()
+
+        // running a for loop to compare elements.
+        for (item in list) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.name.lowercase().contains(text.lowercase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredlist.add(item)
+            }
+        }
+        val filteredDrinklist: ArrayList<MenuData> = ArrayList()
+
+        // running a for loop to compare elements.
+        for (item in drinklist) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.name.lowercase().contains(text.lowercase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredDrinklist.add(item)
+            }
+        }
+        val rvMenu = binding.rvMenu
+        rvMenu.setHasFixedSize(true)
+        rvMenu.layoutManager = LinearLayoutManager(context)
+        rvMenu.adapter = MenuAdapter(filteredlist,viewModel)
+        val rvMinum = binding.rvMinum
+        rvMinum.setHasFixedSize(true)
+        rvMinum.layoutManager = LinearLayoutManager(context)
+        rvMinum.adapter = MenuAdapter(filteredDrinklist,viewModel)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
