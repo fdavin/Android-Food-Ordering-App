@@ -2,10 +2,10 @@ package com.majika.ui.menu
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.appcompat.widget.SearchView
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
@@ -39,20 +39,23 @@ class MenuFragment : Fragment() {
             .get(CartViewModel::class.java)
     }
 
-    private var viewModelAdapter: CartAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        /*super.onViewCreated(view, savedInstanceState)
-        viewModel.keranjang.observe(viewLifecycleOwner, Observer<List<CartItem>> { keranjang ->
-            keranjang.apply {
-                viewModelAdapter?.keranjang = keranjang
+        super.onViewCreated(view, savedInstanceState)
+        val searchView: SearchView = requireView().findViewById<SearchView>(R.id.SearchBar) as SearchView
+        searchView.setOnQueryTextListener(object : OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
             }
-        })*/
+
+            override fun onQueryTextChange(msg: String): Boolean {
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                filter(msg)
+                return false
+            }
+        })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?){
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -87,27 +90,6 @@ class MenuFragment : Fragment() {
         })
 
         return root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
-
-        val searchItem: MenuItem = menu.findItem(R.id.actionSearch)
-        val searchView: SearchView = searchItem.getActionView() as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(msg: String): Boolean {
-                // inside on query text change method we are
-                // calling a method to filter our recycler view.
-                filter(msg)
-                return false
-            }
-        })
-        return
     }
     private fun filter(text: String) {
         // creating a new array list to filter our data.
