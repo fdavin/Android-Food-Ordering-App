@@ -52,9 +52,9 @@ class PembayaranActivity : AppCompatActivity() {
                             statusView.text = "Error"
                         }
                     }
-
                     override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
                         TODO("Not yet implemented")
+                        statusView.text = "Error"
                     }
                 })
 //                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()

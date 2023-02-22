@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 import com.majika.api.cart.CartItem
 import com.majika.ui.keranjang.CartViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: CartViewModel) :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
@@ -47,9 +49,22 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                     tvMenu.text = text
                     val btnAddToCart = itemView.findViewById<Button>(R.id.btnAddToCart)
                     btnAddToCart.setOnClickListener {
-                        val cartItem = CartItem(menuData.name, menuData.price, 1)
-                        viewModel.addItem(cartItem)
-                        Toast.makeText(context, "${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
+                        var quantity = 0
+                        GlobalScope.launch {
+                            val itemcart =  viewModel.getItemByName("${menuData.name}")
+                            if (itemcart != null) {
+                                quantity = itemcart.quantity
+                            }
+                        }
+                        if (quantity==0){
+                            val cartItem = CartItem(menuData.name, menuData.price, 1)
+                            viewModel.addItem(cartItem)
+                            Toast.makeText(context, "${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val cartItem = CartItem(menuData.name, menuData.price, quantity+1)
+                            viewModel.updateItem(cartItem)
+                            Toast.makeText(context, "More ${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class CartItem(
     @PrimaryKey val name: String,
     val price: Int,
-    var quantity: Int = 1,
+    var quantity: Int,
 )
 
 fun List<CartItem>.asDomainModel(): ArrayList<CartItem> {
