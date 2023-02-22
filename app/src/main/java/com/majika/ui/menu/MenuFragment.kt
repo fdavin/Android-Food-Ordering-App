@@ -3,12 +3,14 @@ package com.majika.ui.menu
 import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,6 +18,8 @@ import com.majika.MainActivity
 import com.majika.PembayaranActivity
 import com.majika.R
 import com.majika.api.RetrofitClient
+import com.majika.api.cart.CartAdapter
+import com.majika.api.cart.CartItem
 import com.majika.api.menu.MenuAdapter
 import com.majika.api.menu.MenuData
 import com.majika.api.menu.MenuResponse
@@ -34,6 +38,10 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!
     private val list = ArrayList<MenuData>()
     private val drinklist = ArrayList<MenuData>()
+    private lateinit var adapterFood : MenuAdapter
+    private lateinit var adapterDrink : MenuAdapter
+
+    var cartlist = ArrayList<CartItem>()
     private val viewModel: CartViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
@@ -72,26 +80,54 @@ class MenuFragment : Fragment() {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val rvMinum = binding.rvMinum
         val rvMenu = binding.rvMenu
         rvMenu.setHasFixedSize(true)
         rvMenu.layoutManager = LinearLayoutManager(context)
-
         // Get API
         RetrofitClient.instance.getFoodMenu().enqueue(object: Callback<MenuResponse>{
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 response.body()?.let { list.addAll(it.data) }
-                rvMenu.adapter = MenuAdapter(list,viewModel)
+                rvMenu.adapter = MenuAdapter(list,viewModel,cartlist)
+                adapterFood = rvMenu.adapter as MenuAdapter
+                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
+                    override fun onChanged(t: List<CartItem>?) {
+                        var Set = ArrayList<CartItem>()
+                        for (i in t?.indices!!){
+                            val Add = CartItem(
+                                t[i].name, t[i].price, t[i].quantity
+                            )
+                            Set.add(Add)
+                        }
+                        Log.d("INFO", t.toString())
+                        adapterFood.updateCart(Set)
+                    }
+                })
             }
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
             }
         })
-        val rvMinum = binding.rvMinum
+
         rvMinum.setHasFixedSize(true)
         rvMinum.layoutManager = LinearLayoutManager(context)
         RetrofitClient.instance.getDrinkMenu().enqueue(object: Callback<MenuResponse>{
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 response.body()?.let { drinklist.addAll(it.data) }
-                rvMinum.adapter = MenuAdapter(drinklist,viewModel)
+                rvMinum.adapter = MenuAdapter(drinklist,viewModel,cartlist)
+                adapterDrink = rvMinum.adapter as MenuAdapter
+                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
+                    override fun onChanged(t: List<CartItem>?) {
+                        var Set = ArrayList<CartItem>()
+                        for (i in t?.indices!!){
+                            val Add = CartItem(
+                                t[i].name, t[i].price, t[i].quantity
+                            )
+                            Set.add(Add)
+                        }
+                        Log.d("INFO", t.toString())
+                        adapterDrink.updateCart(Set)
+                    }
+                })
             }
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {
             }
