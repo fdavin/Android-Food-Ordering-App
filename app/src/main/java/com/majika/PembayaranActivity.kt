@@ -1,19 +1,20 @@
 package com.majika
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
+import com.budiyev.android.codescanner.*
 import com.google.zxing.BarcodeFormat
+import com.majika.api.RetrofitClient
+import com.majika.api.payment.PaymentResponse
 import com.majika.ui.keranjang.CartViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class PembayaranActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -38,7 +39,25 @@ class PembayaranActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                val statusView = findViewById<TextView>(R.id.status)
+                RetrofitClient.instance.checkPayment(it.text).enqueue(object: Callback<PaymentResponse>{
+                    override fun onResponse(
+                        call: Call<PaymentResponse>,
+                        response: Response<PaymentResponse>
+                    ) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            statusView.text = responseBody.status
+                        } else {
+                            statusView.text = "Error"
+                        }
+                    }
+
+                    override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+//                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -54,11 +73,12 @@ class PembayaranActivity : AppCompatActivity() {
             codeScanner.startPreview()
         }
         val total: TextView = findViewById<TextView>(R.id.total) as TextView
-        val TotalObserver = Observer<Int> { newTotal ->
+        val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
             total.text = "Total: Rp ${newTotal}"
         }
-        model.total.observe(this,TotalObserver)
+        model.total.observe(this,totalObserver)
+
         supportActionBar?.title = "Pembayaran"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
