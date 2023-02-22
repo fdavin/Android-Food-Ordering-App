@@ -6,17 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".ui.twibbon.TwibbonFragment">
 
-    <TextView
-        android:id="@+id/text_twibbon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/previewView"
+        app:layout_constraintEnd_toEndOf="@id/previewView"
+        app:layout_constraintStart_toStartOf="@id/previewView"
+        app:layout_constraintTop_toTopOf="@id/previewView"/>
+
+    <ImageView
+        android:id="@+id/twibbon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/twibbon"
+        app:layout_constraintBottom_toBottomOf="@id/previewView"
+        app:layout_constraintEnd_toEndOf="@id/previewView"
+        app:layout_constraintStart_toStartOf="@id/previewView"
+        app:layout_constraintTop_toTopOf="@id/previewView"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/cameraShutter"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:layout_margin="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_camera_shutter"
+        app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
