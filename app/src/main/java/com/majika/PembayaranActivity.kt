@@ -75,7 +75,11 @@ class PembayaranActivity : AppCompatActivity() {
         val total: TextView = findViewById<TextView>(R.id.total) as TextView
         val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
-            total.text = "Total: Rp ${newTotal}"
+            if (newTotal==null){
+                total.text = "Total: Rp 0"
+            } else {
+                total.text = "Total: Rp ${newTotal}"
+            }
         }
         model.total.observe(this,totalObserver)
 
