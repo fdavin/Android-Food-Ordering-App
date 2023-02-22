@@ -1,5 +1,6 @@
 package com.majika.ui.keranjang
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.majika.PembayaranActivity
 import com.majika.R
 import com.majika.api.cart.CartAdapter
 import com.majika.api.cart.CartItem
@@ -31,7 +35,6 @@ class KeranjangFragment : Fragment() {
 
     private lateinit var model: CartViewModel
     private lateinit var adapter :CartAdapter
-
 
     /*private val viewModel: CartViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -75,6 +78,11 @@ class KeranjangFragment : Fragment() {
         })
         recyclerView.adapter = adapter
 
+        val bayarBtn : MaterialButton = requireView().findViewById<MaterialButton>(R.id.button_bayar)
+        bayarBtn.setOnClickListener {
+            val i = Intent (requireContext(), PembayaranActivity::class.java)
+            startActivity(i)
+        }
         val total: TextView = requireView().findViewById<TextView>(R.id.Total) as TextView
         val TotalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.

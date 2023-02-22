@@ -1,16 +1,21 @@
 package com.majika.ui.menu
 
+import android.app.ActionBar
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.majika.MainActivity
+import com.majika.PembayaranActivity
 import com.majika.R
 import com.majika.api.RetrofitClient
-import com.majika.api.cart.CartAdapter
 import com.majika.api.menu.MenuAdapter
 import com.majika.api.menu.MenuData
 import com.majika.api.menu.MenuResponse
@@ -22,8 +27,6 @@ import retrofit2.Response
 
 
 class MenuFragment : Fragment() {
-    lateinit var rvMenu: RecyclerView
-    lateinit var rvMinum: RecyclerView
     private var _binding: FragmentMenuBinding? = null
 
     // This property is only valid between onCreateView and
@@ -61,6 +64,11 @@ class MenuFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        /*
+        val main: MainActivity = MainActivity()
+        val toolbar: Toolbar = main.findViewById(R.id.action_bar_layout) as Toolbar
+        main.setActionBar(toolbar)*/
+
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

@@ -4,7 +4,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -31,19 +30,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/qr_code_scanner_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="70dp"
-        android:backgroundTint="@color/cream_200"
-        android:clickable="true"
-        android:contentDescription="@string/title_pembayaran"
-        android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="30dp"
-        app:srcCompat="@drawable/baseline_qr_code_scanner_24"
-        app:tint="@color/red" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/qr_code_scanner_btn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="70dp"-->
+<!--        android:backgroundTint="@color/cream_200"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="@string/title_pembayaran"-->
+<!--        android:scaleType="center"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:maxImageSize="30dp"-->
+<!--        app:srcCompat="@drawable/baseline_qr_code_scanner_24"-->
+<!--        app:tint="@color/red" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

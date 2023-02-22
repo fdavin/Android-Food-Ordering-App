@@ -47,9 +47,11 @@
             android:contentDescription="Increase Quantity"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.730" />
+            app:layout_constraintVertical_bias="0.753" />
 
         <Button
             android:id="@+id/btnDecreaseQuantity"
@@ -60,21 +62,25 @@
             android:contentDescription="Decrease Quantity"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvCartItemQuantity"
             app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.739" />
+            app:layout_constraintVertical_bias="0.768" />
 
         <TextView
             android:id="@+id/tvCartItemQuantity"
             android:layout_width="24dp"
             android:layout_height="26dp"
-            android:layout_marginTop="48dp"
             android:text="1"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnIncreaseQuantity"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/btnDecreaseQuantity"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.746" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
