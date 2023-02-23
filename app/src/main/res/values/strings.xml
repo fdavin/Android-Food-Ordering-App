@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">majika</string>
+    <string name="app_name">Majika</string>
     <string name="title_twibbon">Twibbon</string>
     <string name="title_restoran">Restoran</string>
     <string name="title_menu">Menu</string>
     <string name="title_keranjang">Keranjang</string>
     <string name="title_pembayaran">Pembayaran</string>
+    <string name="title_makanan">Makanan</string>
+    <string name="title_minuman">Minuman</string>
 </resources>
