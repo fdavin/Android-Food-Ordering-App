@@ -94,6 +94,11 @@ class PembayaranActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
