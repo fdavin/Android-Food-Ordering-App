@@ -77,6 +77,7 @@ class MenuFragment : Fragment() {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         // Initialize Category
         list.add(ParentData("Makanan", ArrayList<MenuData>()))
         list.add(ParentData("Minuman", ArrayList<MenuData>()))
@@ -84,6 +85,7 @@ class MenuFragment : Fragment() {
         // Get API
         RetrofitClient.instance.getFoodMenu().enqueue(object: Callback<MenuResponse>{
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
+                list[0].items.clear()
                 response.body()?.let { list[0].items.addAll(it.data) }
 
 //                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
@@ -105,6 +107,7 @@ class MenuFragment : Fragment() {
 
         RetrofitClient.instance.getDrinkMenu().enqueue(object: Callback<MenuResponse>{
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
+                list[1].items.clear()
                 response.body()?.let { list[1].items.addAll(it.data) }
 //                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
 //                    override fun onChanged(t: List<CartItem>?) {
@@ -133,6 +136,7 @@ class MenuFragment : Fragment() {
     private fun filter(text: String) {
         // creating a new array list to filter our data.
         val filteredlist: ArrayList<ParentData> = ArrayList()
+        filteredlist.clear()
         filteredlist.add(ParentData("Makanan", ArrayList<MenuData>()))
         filteredlist.add(ParentData("Minuman", ArrayList<MenuData>()))
 

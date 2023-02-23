@@ -47,7 +47,9 @@ class RestoranFragment : Fragment() {
                 response: Response<BranchResponse>
             ) {
                 val responseCode = response.code()
+                list.clear()
                 response.body()?.let { list.addAll(it.data) }
+                list.sortBy { it.name }
                 val adapter = BranchAdapter(list)
                 rvBranch.adapter = adapter
             }
