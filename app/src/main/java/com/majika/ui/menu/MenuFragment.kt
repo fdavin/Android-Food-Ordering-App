@@ -45,7 +45,7 @@ class MenuFragment : Fragment(), SensorEventListener {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val list = ArrayList<ParentData>()
+    private var list = ArrayList<ParentData>()
     private lateinit var adapterMenu: ParentMenuAdapter
 
     var cartlist = ArrayList<CartItem>()
@@ -60,6 +60,9 @@ class MenuFragment : Fragment(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            list = savedInstanceState.getSerializable("itemlist") as ArrayList<ParentData>
+        }
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
         if (tempSensor == null) {
@@ -79,7 +82,6 @@ class MenuFragment : Fragment(), SensorEventListener {
         if (sensor != null) {
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST)
         } else {
-
         }
     }
 
@@ -93,8 +95,10 @@ class MenuFragment : Fragment(), SensorEventListener {
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
     }
-
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("itemlist",list)
+    }
     override fun onResume() {
         super.onResume()
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
@@ -155,19 +159,6 @@ class MenuFragment : Fragment(), SensorEventListener {
                 list[0].items.clear()
                 response.body()?.let { list[0].items.addAll(it.data) }
 
-//                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
-//                    override fun onChanged(t: List<CartItem>?) {
-//                        var Set = ArrayList<CartItem>()
-//                        for (i in t?.indices!!){
-//                            val Add = CartItem(
-//                                t[i].name, t[i].price, t[i].quantity
-//                            )
-//                            Set.add(Add)
-//                        }
-//                        Log.d("INFO", t.toString())
-//                        adapterFood.updateCart(Set)
-//                    }
-//                })
             }
 
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {}
@@ -177,19 +168,6 @@ class MenuFragment : Fragment(), SensorEventListener {
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 list[1].items.clear()
                 response.body()?.let { list[1].items.addAll(it.data) }
-//                viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
-//                    override fun onChanged(t: List<CartItem>?) {
-//                        var Set = ArrayList<CartItem>()
-//                        for (i in t?.indices!!){
-//                            val Add = CartItem(
-//                                t[i].name, t[i].price, t[i].quantity
-//                            )
-//                            Set.add(Add)
-//                        }
-//                        Log.d("INFO", t.toString())
-//                        adapterDrink.updateCart(Set)
-//                    }
-//                })
             }
 
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {}
