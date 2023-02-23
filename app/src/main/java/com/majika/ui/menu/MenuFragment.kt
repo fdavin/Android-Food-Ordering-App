@@ -99,6 +99,8 @@ class MenuFragment : Fragment(), SensorEventListener {
         super.onResume()
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         toolbar.title = "Menu"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.VISIBLE
         val temp_text: TextView = requireActivity().findViewById(R.id.temp)
         if (tempSensor != null) {
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -111,7 +113,7 @@ class MenuFragment : Fragment(), SensorEventListener {
         if (tempSensor != null) {
             sensorManager.unregisterListener(this, tempSensor)
             val temp_text: TextView = requireActivity().findViewById(R.id.temp)
-            temp_text.visibility = TextView.INVISIBLE
+            temp_text.visibility = TextView.GONE
         }
     }
 

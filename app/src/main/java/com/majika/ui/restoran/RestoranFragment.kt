@@ -42,7 +42,7 @@ class RestoranFragment : Fragment() {
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         toolbar.title = "Restoran"
         val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.INVISIBLE
+        temp.visibility = TextView.GONE
 
         val rvBranch = binding.rvBranch
         rvBranch.setHasFixedSize(true)

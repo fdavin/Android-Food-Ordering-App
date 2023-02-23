@@ -54,7 +54,7 @@ class KeranjangFragment : Fragment() {
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         toolbar.title = "Keranjang"
         val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.INVISIBLE
+        temp.visibility = TextView.GONE
 
         model = ViewModelProvider(this).get(CartViewModel::class.java)
         adapter = CartAdapter(list, model)

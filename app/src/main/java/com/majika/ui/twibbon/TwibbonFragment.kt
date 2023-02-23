@@ -44,7 +44,7 @@ class TwibbonFragment : Fragment() {
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         toolbar.title = "Twibbon"
         val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.INVISIBLE
+        temp.visibility = TextView.GONE
 
         return binding.root
     }
