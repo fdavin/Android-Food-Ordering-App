@@ -7,6 +7,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -18,6 +19,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.majika.MainActivity
 import com.majika.PembayaranActivity
@@ -91,8 +93,10 @@ class MenuFragment : Fragment() , SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        val temp_text: TextView = requireActivity().findViewById(R.id.temp)
         if (tempSensor!=null){
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            temp_text?.visibility = TextView.VISIBLE
         }
     }
 
@@ -100,6 +104,8 @@ class MenuFragment : Fragment() , SensorEventListener {
         super.onPause()
         if (tempSensor!=null){
             sensorManager.unregisterListener(this, tempSensor)
+            val temp_text: TextView = requireActivity().findViewById(R.id.temp)
+            temp_text?.visibility = TextView.INVISIBLE
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
