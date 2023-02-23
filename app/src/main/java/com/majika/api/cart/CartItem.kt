@@ -15,7 +15,8 @@ fun List<CartItem>.asDomainModel(): ArrayList<CartItem> {
         CartItem(
             name = it.name,
             price = it.price,
-            quantity = it.quantity)
+            quantity = it.quantity
+        )
     } as ArrayList<CartItem>
 }
 

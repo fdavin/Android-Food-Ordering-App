@@ -18,12 +18,12 @@
             android:id="@+id/tvBranchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:padding="8dp"
             android:textColor="@color/cream_100"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvBranch"
@@ -31,10 +31,10 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textColor="@color/cream_100"
+            app:layout_constraintBottom_toTopOf="@id/buttonBranch"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvBranchName"
-            app:layout_constraintBottom_toTopOf="@id/buttonBranch"/>
+            app:layout_constraintTop_toBottomOf="@id/tvBranchName" />
 
 
         <androidx.appcompat.widget.AppCompatButton

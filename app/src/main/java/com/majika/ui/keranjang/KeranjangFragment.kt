@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.majika.PembayaranActivity
 import com.majika.R
 import com.majika.api.cart.CartAdapter
@@ -35,7 +34,7 @@ class KeranjangFragment : Fragment() {
     var list = ArrayList<CartItem>()
 
     private lateinit var model: CartViewModel
-    private lateinit var adapter :CartAdapter
+    private lateinit var adapter: CartAdapter
 
     /*private val viewModel: CartViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -58,7 +57,7 @@ class KeranjangFragment : Fragment() {
         temp.visibility = TextView.INVISIBLE
 
         model = ViewModelProvider(this).get(CartViewModel::class.java)
-        adapter = CartAdapter(list,model)
+        adapter = CartAdapter(list, model)
 
         return root
     }
@@ -68,10 +67,10 @@ class KeranjangFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        model.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>>{
+        model.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
             override fun onChanged(t: List<CartItem>?) {
                 var Set = ArrayList<CartItem>()
-                for (i in t?.indices!!){
+                for (i in t?.indices!!) {
                     val Add = CartItem(
                         t[i].name, t[i].price, t[i].quantity
                     )
@@ -84,22 +83,23 @@ class KeranjangFragment : Fragment() {
         })
         recyclerView.adapter = adapter
 
-        val bayarBtn : MaterialButton = requireView().findViewById<MaterialButton>(R.id.button_bayar)
+        val bayarBtn: MaterialButton = requireView().findViewById<MaterialButton>(R.id.button_bayar)
         bayarBtn.setOnClickListener {
-            val i = Intent (requireContext(), PembayaranActivity::class.java)
+            val i = Intent(requireContext(), PembayaranActivity::class.java)
             startActivity(i)
         }
         val total: TextView = requireView().findViewById<TextView>(R.id.Total) as TextView
         val TotalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
-            if (newTotal==null){
+            if (newTotal == null) {
                 total.text = "Total: Rp 0"
             } else {
                 total.text = "Total: Rp ${newTotal}"
             }
         }
-        model.total.observe(viewLifecycleOwner,TotalObserver)
+        model.total.observe(viewLifecycleOwner, TotalObserver)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

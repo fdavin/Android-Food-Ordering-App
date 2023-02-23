@@ -5,35 +5,39 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 import com.majika.api.cart.CartItem
 import com.majika.ui.keranjang.CartViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class ParentMenuAdapter(private val data: ArrayList<ParentData>,private val viewModel: CartViewModel, private val parentViewContext: Context?, private val CartItems: ArrayList<CartItem> = ArrayList(), private val viewLifeCyleOwner: LifecycleOwner) :
+class ParentMenuAdapter(
+    private val data: ArrayList<ParentData>,
+    private val viewModel: CartViewModel,
+    private val parentViewContext: Context?,
+    private val CartItems: ArrayList<CartItem> = ArrayList(),
+    private val viewLifeCyleOwner: LifecycleOwner
+) :
     RecyclerView.Adapter<ParentMenuAdapter.ParentMenuViewHolder>() {
 
     private var keranjang: ArrayList<CartItem>
-    private lateinit var adapterMenu : MenuAdapter
+    private lateinit var adapterMenu: MenuAdapter
+
     init {
         keranjang = CartItems
     }
-    fun updateCart(Cart: ArrayList<CartItem>){
+
+    fun updateCart(Cart: ArrayList<CartItem>) {
         keranjang = Cart
         notifyDataSetChanged()
     }
-    inner class ParentMenuViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView){
-        fun bind(parentMenuData: ParentData){
-            with(itemView){
+
+    inner class ParentMenuViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+        fun bind(parentMenuData: ParentData) {
+            with(itemView) {
                 val menuCategory = findViewById<TextView>(R.id.MenuCategory)
                 val rvMenu = findViewById<RecyclerView>(R.id.rvMenu)
                 menuCategory.text = parentMenuData.name
@@ -43,7 +47,7 @@ class ParentMenuAdapter(private val data: ArrayList<ParentData>,private val view
                 viewModel.keranjang.observe(viewLifeCyleOwner, object : Observer<List<CartItem>> {
                     override fun onChanged(t: List<CartItem>?) {
                         var Set = ArrayList<CartItem>()
-                        for (i in t?.indices!!){
+                        for (i in t?.indices!!) {
                             val Add = CartItem(
                                 t[i].name, t[i].price, t[i].quantity
                             )
@@ -57,8 +61,9 @@ class ParentMenuAdapter(private val data: ArrayList<ParentData>,private val view
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ParentMenuViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_parent_menu, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentMenuViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_parent_menu, parent, false)
         return ParentMenuViewHolder(view)
     }
 

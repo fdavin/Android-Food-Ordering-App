@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="@id/previewView"
         app:layout_constraintEnd_toEndOf="@id/previewView"
         app:layout_constraintStart_toStartOf="@id/previewView"
-        app:layout_constraintTop_toTopOf="@id/previewView"/>
+        app:layout_constraintTop_toTopOf="@id/previewView" />
 
     <ImageView
         android:id="@+id/twibbon"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="@id/previewView"
         app:layout_constraintEnd_toEndOf="@id/previewView"
         app:layout_constraintStart_toStartOf="@id/previewView"
-        app:layout_constraintTop_toTopOf="@id/previewView"/>
+        app:layout_constraintTop_toTopOf="@id/previewView" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cameraShutter"

@@ -1,15 +1,14 @@
 package com.majika.api.cart
 
 import android.content.Context
-import android.provider.CalendarContract.Instances
-import androidx.room.*
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.room.*
 
 @Dao
 interface CartDao {
     @Query("SELECT * FROM cart_items")
     fun getAll(): LiveData<List<CartItem>>
+
     @Query("SELECT * FROM cart_items WHERE name = :name")
     fun getByName(name: String): CartItem?
 
@@ -23,7 +22,7 @@ interface CartDao {
     fun deleteAll()
 
     @Query("SELECT SUM(quantity*price) FROM cart_items")
-    fun getTotal() : LiveData<Int>
+    fun getTotal(): LiveData<Int>
 
     @Update
     fun update(item: CartItem)
@@ -33,6 +32,7 @@ interface CartDao {
 abstract class CartDatabase : RoomDatabase() {
     abstract fun cartItemDao(): CartDao
 }
+
 private lateinit var INSTANCE: CartDatabase
 fun getDatabase(context: Context): CartDatabase {
     synchronized(CartDatabase::class.java) {

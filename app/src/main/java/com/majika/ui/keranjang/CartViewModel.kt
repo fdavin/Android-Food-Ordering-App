@@ -26,9 +26,11 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
     fun updateItem(item: CartItem) = viewModelScope.launch {
         repository.updateItem(item)
     }
+
     suspend fun getItemByName(Name: String): CartItem? {
         return repository.getItemByName(Name)
     }
+
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CartViewModel::class.java)) {

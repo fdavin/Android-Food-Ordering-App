@@ -43,28 +43,33 @@ class PembayaranActivity : AppCompatActivity() {
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
                 val statusView = findViewById<TextView>(R.id.status)
-                RetrofitClient.instance.checkPayment(it.text).enqueue(object: Callback<PaymentResponse>{
-                    override fun onResponse(
-                        call: Call<PaymentResponse>,
-                        response: Response<PaymentResponse>
-                    ) {
-                        val responseBody = response.body()
-                        if (responseBody != null) {
-                            statusView.text = responseBody.status
-                            if (responseBody.status == "SUCCESS") {
-                                Timer().schedule(5000) {
-                                    var i = Intent(this@PembayaranActivity, MainActivity::class.java)
-                                    startActivity(i)
+                RetrofitClient.instance.checkPayment(it.text)
+                    .enqueue(object : Callback<PaymentResponse> {
+                        override fun onResponse(
+                            call: Call<PaymentResponse>,
+                            response: Response<PaymentResponse>
+                        ) {
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                statusView.text = responseBody.status
+                                if (responseBody.status == "SUCCESS") {
+                                    Timer().schedule(5000) {
+                                        var i = Intent(
+                                            this@PembayaranActivity,
+                                            MainActivity::class.java
+                                        )
+                                        startActivity(i)
+                                    }
                                 }
+                            } else {
+                                statusView.text = "Error"
                             }
-                        } else {
+                        }
+
+                        override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
                             statusView.text = "Error"
                         }
-                    }
-                    override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
-                        statusView.text = "Error"
-                    }
-                })
+                    })
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -82,13 +87,13 @@ class PembayaranActivity : AppCompatActivity() {
         val total: TextView = findViewById<TextView>(R.id.total) as TextView
         val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
-            if (newTotal==null){
+            if (newTotal == null) {
                 total.text = "Total: Rp 0"
             } else {
                 total.text = "Total: Rp ${newTotal}"
             }
         }
-        model.total.observe(this,totalObserver)
+        model.total.observe(this, totalObserver)
 
         supportActionBar?.title = "Pembayaran"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -11,13 +11,14 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 
-class BranchAdapter (private val data: ArrayList<BranchData>): RecyclerView.Adapter<BranchAdapter.BranchViewHolder>(){
-    inner class BranchViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView){
-        fun bind(branchData: BranchData){
-            with(itemView){
+class BranchAdapter(private val data: ArrayList<BranchData>) :
+    RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
+    inner class BranchViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+        fun bind(branchData: BranchData) {
+            with(itemView) {
                 val text =
-                        "${branchData.address}\n" +
-                        branchData.phone_number
+                    "${branchData.address}\n" +
+                            branchData.phone_number
 
                 val tvBranchName = findViewById<TextView>(R.id.tvBranchName)
                 tvBranchName.text = "${branchData.name}"
@@ -25,11 +26,15 @@ class BranchAdapter (private val data: ArrayList<BranchData>): RecyclerView.Adap
                 tvBranch.text = text
 
                 val buttonBranch = findViewById<Button>(R.id.buttonBranch)
-                buttonBranch.setOnClickListener{
-                    val gmmIntentUri = Uri.parse("geo:${branchData.latitude},${branchData.longitude}?q=${Uri.encode(branchData.address)}, ${Uri.encode(branchData.name)}")
+                buttonBranch.setOnClickListener {
+                    val gmmIntentUri = Uri.parse(
+                        "geo:${branchData.latitude},${branchData.longitude}?q=${
+                            Uri.encode(branchData.address)
+                        }, ${Uri.encode(branchData.name)}"
+                    )
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
-                    startActivity(it.context,mapIntent, null)
+                    startActivity(it.context, mapIntent, null)
                 }
             }
         }

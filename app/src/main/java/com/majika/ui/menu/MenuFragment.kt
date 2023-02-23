@@ -1,18 +1,19 @@
 package com.majika.ui.menu
 
-import android.app.ActionBar
 import android.content.Context
-import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -20,14 +21,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.majika.MainActivity
-import com.majika.PembayaranActivity
 import com.majika.R
 import com.majika.api.RetrofitClient
-import com.majika.api.cart.CartAdapter
 import com.majika.api.cart.CartItem
-import com.majika.api.menu.*
+import com.majika.api.menu.MenuData
+import com.majika.api.menu.MenuResponse
+import com.majika.api.menu.ParentData
+import com.majika.api.menu.ParentMenuAdapter
 import com.majika.databinding.FragmentMenuBinding
 import com.majika.ui.keranjang.CartViewModel
 import retrofit2.Call
@@ -35,18 +35,18 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MenuFragment : Fragment() , SensorEventListener {
+class MenuFragment : Fragment(), SensorEventListener {
     private var _binding: FragmentMenuBinding? = null
 
-    private lateinit var sensorManager : SensorManager
-    private var tempSensor : Sensor? = null
-    private var temperature : Float = Float.NaN
+    private lateinit var sensorManager: SensorManager
+    private var tempSensor: Sensor? = null
+    private var temperature: Float = Float.NaN
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     private val list = ArrayList<ParentData>()
-    private lateinit var adapterMenu : ParentMenuAdapter
+    private lateinit var adapterMenu: ParentMenuAdapter
 
     var cartlist = ArrayList<CartItem>()
     private val viewModel: CartViewModel by lazy {
@@ -62,18 +62,22 @@ class MenuFragment : Fragment() , SensorEventListener {
         super.onCreate(savedInstanceState)
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-        if (tempSensor == null){
-            Toast.makeText(context , "Temperature sensor is not available",
-                Toast.LENGTH_LONG).show()
-        }else{
+        if (tempSensor == null) {
+            Toast.makeText(
+                context, "Temperature sensor is not available",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
 
         }
     }
+
     private fun loadAmbientTemperature() {
-        sensorManager = activity?.getSystemService(AppCompatActivity.SENSOR_SERVICE) as SensorManager
+        sensorManager =
+            activity?.getSystemService(AppCompatActivity.SENSOR_SERVICE) as SensorManager
         val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
         if (sensor != null) {
-            sensorManager.registerListener(this , sensor, SensorManager.SENSOR_DELAY_FASTEST)
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST)
         } else {
 
         }
@@ -81,9 +85,9 @@ class MenuFragment : Fragment() , SensorEventListener {
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
         val temp_text: TextView = requireActivity().findViewById(R.id.temp)
-        if (sensorEvent.values.size > 0){
+        if (sensorEvent.values.size > 0) {
             temperature = sensorEvent.values[0]
-            temp_text?.text = "${temperature}°C"
+            temp_text.text = "${temperature}°C"
         }
     }
 
@@ -96,30 +100,31 @@ class MenuFragment : Fragment() , SensorEventListener {
         val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
         toolbar.title = "Menu"
         val temp_text: TextView = requireActivity().findViewById(R.id.temp)
-        if (tempSensor!=null){
+        if (tempSensor != null) {
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
-            temp_text?.visibility = TextView.VISIBLE
+            temp_text.visibility = TextView.VISIBLE
         }
     }
 
     override fun onPause() {
         super.onPause()
-        if (tempSensor!=null){
+        if (tempSensor != null) {
             sensorManager.unregisterListener(this, tempSensor)
             val temp_text: TextView = requireActivity().findViewById(R.id.temp)
-            temp_text?.visibility = TextView.INVISIBLE
+            temp_text.visibility = TextView.INVISIBLE
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchView: SearchView = binding.SearchBar
-        searchView.setOnQueryTextListener(object : OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(msg: String): Boolean {
-                filter(msg,viewLifecycleOwner)
+                filter(msg, viewLifecycleOwner)
                 return false
             }
         })
@@ -143,7 +148,7 @@ class MenuFragment : Fragment() , SensorEventListener {
         list.add(ParentData("Minuman", ArrayList<MenuData>()))
 
         // Get API
-        RetrofitClient.instance.getFoodMenu().enqueue(object: Callback<MenuResponse>{
+        RetrofitClient.instance.getFoodMenu().enqueue(object : Callback<MenuResponse> {
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 list[0].items.clear()
                 response.body()?.let { list[0].items.addAll(it.data) }
@@ -162,10 +167,11 @@ class MenuFragment : Fragment() , SensorEventListener {
 //                    }
 //                })
             }
+
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {}
         })
 
-        RetrofitClient.instance.getDrinkMenu().enqueue(object: Callback<MenuResponse>{
+        RetrofitClient.instance.getDrinkMenu().enqueue(object : Callback<MenuResponse> {
             override fun onResponse(call: Call<MenuResponse>, response: Response<MenuResponse>) {
                 list[1].items.clear()
                 response.body()?.let { list[1].items.addAll(it.data) }
@@ -183,17 +189,19 @@ class MenuFragment : Fragment() , SensorEventListener {
 //                    }
 //                })
             }
+
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {}
         })
         val rvParentMenu = binding.rvParentMenu
         rvParentMenu.setHasFixedSize(true)
         rvParentMenu.layoutManager = LinearLayoutManager(context)
-        rvParentMenu.adapter = ParentMenuAdapter(list,viewModel,context,cartlist,viewLifecycleOwner)
+        rvParentMenu.adapter =
+            ParentMenuAdapter(list, viewModel, context, cartlist, viewLifecycleOwner)
         adapterMenu = rvParentMenu.adapter as ParentMenuAdapter
         viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
             override fun onChanged(t: List<CartItem>?) {
                 var Set = ArrayList<CartItem>()
-                for (i in t?.indices!!){
+                for (i in t?.indices!!) {
                     val Add = CartItem(
                         t[i].name, t[i].price, t[i].quantity
                     )
@@ -206,6 +214,7 @@ class MenuFragment : Fragment() , SensorEventListener {
 
         return root
     }
+
     private fun filter(text: String, viewLifeCyleOwner: LifecycleOwner) {
         // creating a new array list to filter our data.
         val filteredlist: ArrayList<ParentData> = ArrayList()
@@ -235,8 +244,10 @@ class MenuFragment : Fragment() , SensorEventListener {
         val rvParentMenu = binding.rvParentMenu
         rvParentMenu.setHasFixedSize(true)
         rvParentMenu.layoutManager = LinearLayoutManager(context)
-        rvParentMenu.adapter = ParentMenuAdapter(filteredlist, viewModel, context, cartlist, viewLifecycleOwner)
+        rvParentMenu.adapter =
+            ParentMenuAdapter(filteredlist, viewModel, context, cartlist, viewLifecycleOwner)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

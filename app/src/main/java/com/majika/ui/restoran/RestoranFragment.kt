@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.majika.R
-import retrofit2.Callback
 import com.majika.api.RetrofitClient
 import com.majika.api.branch.BranchAdapter
 import com.majika.api.branch.BranchData
 import com.majika.api.branch.BranchResponse
 import com.majika.databinding.FragmentRestoranBinding
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class RestoranFragment : Fragment() {
@@ -49,7 +49,7 @@ class RestoranFragment : Fragment() {
         rvBranch.layoutManager = LinearLayoutManager(context)
 
         // Get API
-        RetrofitClient.instance.getBranch().enqueue(object: Callback<BranchResponse>{
+        RetrofitClient.instance.getBranch().enqueue(object : Callback<BranchResponse> {
             override fun onResponse(
                 call: Call<BranchResponse>,
                 response: Response<BranchResponse>

@@ -5,28 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
-
 import com.majika.ui.keranjang.CartViewModel
 
-class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), private val viewModel: CartViewModel) :
+class CartAdapter(
+    private val CartItems: ArrayList<CartItem> = ArrayList(),
+    private val viewModel: CartViewModel
+) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     private var keranjang: ArrayList<CartItem>
+
     init {
         keranjang = CartItems
     }
-    fun updateCart(Cart: ArrayList<CartItem>){
+
+    fun updateCart(Cart: ArrayList<CartItem>) {
         keranjang = Cart
         notifyDataSetChanged()
     }
 
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: CartItem) {
-            with(itemView){
+            with(itemView) {
                 val nameTextView: TextView = itemView.findViewById(R.id.tvCartItemName)
                 nameTextView.text = item.name
                 val priceTextView: TextView = itemView.findViewById(R.id.tvCartItemPrice)
@@ -52,15 +54,18 @@ class CartAdapter(private val CartItems: ArrayList<CartItem> = ArrayList(), priv
             }
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
         return CartViewHolder(itemView)
     }
+
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val item = keranjang[position]
         holder.bind(item)
     }
+
     override fun getItemCount(): Int {
         return keranjang.size
     }
