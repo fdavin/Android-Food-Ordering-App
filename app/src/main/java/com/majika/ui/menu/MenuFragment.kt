@@ -78,7 +78,7 @@ class MenuFragment : Fragment() , SensorEventListener {
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
-        val temp_text = binding.temperature
+        val temp_text: TextView = requireActivity().findViewById(R.id.temp)
         if (sensorEvent.values.size > 0){
             temperature = sensorEvent.values[0]
             temp_text?.text = "${temperature}°C"
