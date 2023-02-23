@@ -12,9 +12,6 @@ interface Api {
     @GET("v1/branch")
     fun getBranch(): Call<BranchResponse>
 
-    @GET("v1/menu")
-    fun getMenu(): Call<MenuResponse>
-
     @GET("v1/menu/food")
     fun getFoodMenu(): Call<MenuResponse>
 

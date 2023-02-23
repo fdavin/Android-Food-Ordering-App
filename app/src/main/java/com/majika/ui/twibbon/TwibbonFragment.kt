@@ -32,7 +32,6 @@ class TwibbonFragment : Fragment() {
 
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var cameraExecutor: ExecutorService
-    private var preview: Preview? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,6 +114,7 @@ class TwibbonFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray

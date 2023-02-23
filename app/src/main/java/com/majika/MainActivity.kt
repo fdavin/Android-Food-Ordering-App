@@ -25,13 +25,5 @@ class MainActivity : AppCompatActivity() {
 //        )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        // Temporary QR Code Scanner Button (Pembayaran)
-        /*
-        val bayarBtn = findViewById<FloatingActionButton>(R.id.qr_code_scanner_btn)
-        bayarBtn.setOnClickListener {
-            val i = Intent(this, PembayaranActivity::class.java)
-            startActivity(i)
-        }*/
     }
 }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.MaterialToolbar
 import com.majika.R
@@ -33,9 +32,6 @@ class RestoranFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val restoranViewModel =
-            ViewModelProvider(this).get(RestoranViewModel::class.java)
-
         _binding = FragmentRestoranBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -54,7 +50,6 @@ class RestoranFragment : Fragment() {
                 call: Call<BranchResponse>,
                 response: Response<BranchResponse>
             ) {
-                val responseCode = response.code()
                 list.clear()
                 response.body()?.let { list.addAll(it.data) }
                 list.sortBy { it.name }
