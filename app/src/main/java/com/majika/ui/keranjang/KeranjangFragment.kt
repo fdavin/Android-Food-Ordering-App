@@ -69,27 +69,27 @@ class KeranjangFragment : Fragment() {
 
         model.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
             override fun onChanged(t: List<CartItem>?) {
-                var Set = ArrayList<CartItem>()
+                val set = ArrayList<CartItem>()
                 for (i in t?.indices!!) {
-                    val Add = CartItem(
+                    val add = CartItem(
                         t[i].name, t[i].price, t[i].quantity
                     )
-                    Set.add(Add)
+                    set.add(add)
                 }
                 Log.d("INFO", t.toString())
-                adapter.updateCart(Set)
+                adapter.updateCart(set)
 
             }
         })
         recyclerView.adapter = adapter
 
-        val bayarBtn: MaterialButton = requireView().findViewById<MaterialButton>(R.id.button_bayar)
+        val bayarBtn: MaterialButton = requireView().findViewById(R.id.button_bayar)
         bayarBtn.setOnClickListener {
             val i = Intent(requireContext(), PembayaranActivity::class.java)
             startActivity(i)
         }
-        val total: TextView = requireView().findViewById<TextView>(R.id.Total) as TextView
-        val TotalObserver = Observer<Int> { newTotal ->
+        val total: TextView = requireView().findViewById(R.id.Total) as TextView
+        val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
             if (newTotal == null) {
                 total.text = "Total: Rp 0"
@@ -97,7 +97,7 @@ class KeranjangFragment : Fragment() {
                 total.text = "Total: Rp ${newTotal}"
             }
         }
-        model.total.observe(viewLifecycleOwner, TotalObserver)
+        model.total.observe(viewLifecycleOwner, totalObserver)
     }
 
     override fun onDestroyView() {

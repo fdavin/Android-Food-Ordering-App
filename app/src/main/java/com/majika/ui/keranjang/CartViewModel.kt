@@ -9,7 +9,6 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = CartRepository(getDatabase(application))
 
     val keranjang = repository.keranjang
-    private val _playlist = MutableLiveData<List<CartItem>>()
     val total = repository.total
     fun addItem(item: CartItem) = viewModelScope.launch {
         repository.addItem(item)
@@ -19,16 +18,8 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
         repository.removeItem(item)
     }
 
-    fun removeAllItems() = viewModelScope.launch {
-        repository.removeAllItems()
-    }
-
     fun updateItem(item: CartItem) = viewModelScope.launch {
         repository.updateItem(item)
-    }
-
-    suspend fun getItemByName(Name: String): CartItem? {
-        return repository.getItemByName(Name)
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

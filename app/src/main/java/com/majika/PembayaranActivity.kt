@@ -54,7 +54,7 @@ class PembayaranActivity : AppCompatActivity() {
                                 statusView.text = responseBody.status
                                 if (responseBody.status == "SUCCESS") {
                                     Timer().schedule(5000) {
-                                        var i = Intent(
+                                        val i = Intent(
                                             this@PembayaranActivity,
                                             MainActivity::class.java
                                         )
@@ -84,7 +84,7 @@ class PembayaranActivity : AppCompatActivity() {
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
-        val total: TextView = findViewById<TextView>(R.id.total) as TextView
+        val total: TextView = findViewById(R.id.total)
         val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
             if (newTotal == null) {
