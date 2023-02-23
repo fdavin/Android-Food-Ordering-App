@@ -4,83 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@android:color/transparent"
+    app:cardBackgroundColor="#8E1C18"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="428dp"
-        android:layout_height="89dp"
-        android:background="#8E1C18">
-
-        <TextView
-            android:id="@+id/tvCartItemName"
-            android:layout_width="274dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Product Name"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvCartItemPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Price: $9.99"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCartItemName" />
-
-        <Button
-            android:id="@+id/btnIncreaseQuantity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="52dp"
-            android:background="@drawable/button"
-            android:contentDescription="Increase Quantity"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cart"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.753" />
+            >
+            <TextView
+                android:id="@+id/tvCartItemName"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnDecreaseQuantity"
-            android:layout_width="23dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
-            android:background="@drawable/minus_button"
-            android:contentDescription="Decrease Quantity"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tvCartItemQuantity"
-            app:layout_constraintStart_toEndOf="@+id/tvCartItemName"
+            <TextView
+                android:id="@+id/tvCartItemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMenuName" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cart"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.768" />
-
-        <TextView
-            android:id="@+id/tvCartItemQuantity"
-            android:layout_width="24dp"
-            android:layout_height="26dp"
-            android:text="1"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnIncreaseQuantity"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/btnDecreaseQuantity"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.746" />
+            >
+            <Button
+                android:id="@+id/btnDecreaseQuantity"
+                android:layout_width="23dp"
+                android:layout_height="28dp"
+                android:background="@drawable/minus_button"
+                android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tvCartItemQuantity"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+            <Button
+                android:id="@+id/btnIncreaseQuantity"
+                android:layout_width="23dp"
+                android:layout_height="28dp"
+                android:background="@drawable/button"
+                android:textSize="24sp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
