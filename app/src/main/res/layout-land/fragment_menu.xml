@@ -8,64 +8,35 @@
 
     <SearchView
         android:id="@+id/SearchBar"
-        android:layout_width="159dp"
-        android:layout_height="26dp"
+        android:layout_width="194dp"
+        android:layout_height="30dp"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Minuman"
-        app:layout_constraintHorizontal_bias="0.065"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.431" />
 
-    <TextView
-        android:id="@+id/Makanan"
-        android:layout_width="491dp"
-        android:layout_height="42dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:text="MAKANAN"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMenu"
+    <LinearLayout
         android:layout_width="499dp"
-        android:layout_height="120dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Makanan"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_menu" />
+        app:layout_constraintStart_toEndOf="@id/SearchBar"
+        app:layout_constraintVertical_bias="0.0">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvParentMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_menu" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/Minuman"
-        android:layout_width="465dp"
-        android:layout_height="39dp"
-        android:layout_marginRight="40dp"
-        android:padding="8dp"
-        android:text="MINUMAN"
-        android:textSize="20sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvMenu" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMinum"
-        android:layout_width="502dp"
-        android:layout_height="210dp"
-        android:background="@android:color/transparent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Minuman"
-        tools:listitem="@layout/item_minum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
