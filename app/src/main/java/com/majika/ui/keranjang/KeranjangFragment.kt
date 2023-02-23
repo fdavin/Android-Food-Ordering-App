@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.majika.PembayaranActivity
@@ -50,6 +51,11 @@ class KeranjangFragment : Fragment() {
     ): View {
         _binding = FragmentKeranjangBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Keranjang"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.INVISIBLE
 
         model = ViewModelProvider(this).get(CartViewModel::class.java)
         adapter = CartAdapter(list,model)

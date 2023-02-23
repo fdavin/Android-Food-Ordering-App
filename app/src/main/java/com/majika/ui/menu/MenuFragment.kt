@@ -93,6 +93,8 @@ class MenuFragment : Fragment() , SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Menu"
         val temp_text: TextView = requireActivity().findViewById(R.id.temp)
         if (tempSensor!=null){
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
@@ -135,7 +137,6 @@ class MenuFragment : Fragment() , SensorEventListener {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         // Initialize Category
         list.add(ParentData("Makanan", ArrayList<MenuData>()))

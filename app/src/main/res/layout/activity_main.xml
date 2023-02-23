@@ -21,12 +21,11 @@
             <TextView
                 android:id="@+id/temp"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_gravity="bottom|end"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginEnd="10dp"
                 android:textSize="20dp"
                 android:text="420°C"
-                android:textAlignment="gravity"
                 android:textStyle="bold" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>

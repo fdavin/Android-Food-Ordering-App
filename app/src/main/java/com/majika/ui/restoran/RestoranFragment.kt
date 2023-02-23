@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.MaterialToolbar
+import com.majika.R
 import retrofit2.Callback
 import com.majika.api.RetrofitClient
 import com.majika.api.branch.BranchAdapter
@@ -35,6 +38,11 @@ class RestoranFragment : Fragment() {
 
         _binding = FragmentRestoranBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Restoran"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.INVISIBLE
 
         val rvBranch = binding.rvBranch
         rvBranch.setHasFixedSize(true)
