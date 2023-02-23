@@ -20,11 +20,31 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
     init {
         keranjang = CartItems
     }
-    fun updateCart(Cart: ArrayList<CartItem>){
+    fun updateCart(CartItem: CartItem){
+        var inCart = false
+        for (items in keranjang){
+            if (CartItem.name==items.name){
+                items.quantity = CartItem.quantity
+                inCart = true
+            }
+        }
+        if (!inCart){
+            keranjang.add(CartItem)
+        }
+    }
+    fun updateViewModel(Cart: ArrayList<CartItem>){
         keranjang = Cart
         notifyDataSetChanged()
     }
-
+    fun getItemQuantity(Name: String) : Int{
+        var quantity = 0
+        for (items in keranjang){
+            if (items.name == Name) {
+                quantity = items.quantity
+            }
+        }
+        return quantity
+    }
     inner class MenuViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView){
         fun bind(menuData: MenuData){
             with(itemView){
@@ -46,23 +66,24 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                 val tvMenu = findViewById<TextView>(R.id.tvMenu)
                 tvMenu.text = text
                 var quantity = 0
-                GlobalScope.launch {
-                    val itemcart =  viewModel.getItemByName("${menuData.name}")
-                    quantity = itemcart?.quantity ?: 0
-                    val itemQuantity = findViewById<TextView>(R.id.tvQuantity)
-                    val btnDecrease = itemView.findViewById<Button>(R.id.btnKurang)
-                    itemQuantity.text = quantity.toString()
-                    if (quantity>0) {
-                    } else {
-                        itemQuantity.visibility = TextView.INVISIBLE
-                        btnDecrease.visibility = Button.INVISIBLE
-                    }
+                quantity = getItemQuantity( "${menuData.name}")
+                val itemQuantity = findViewById<TextView>(R.id.tvQuantity)
+                val btnDecrease = itemView.findViewById<Button>(R.id.btnKurang)
+                itemQuantity.text = quantity.toString()
+                if (quantity!=0 && itemQuantity.visibility!=TextView.VISIBLE){
+                    itemQuantity.visibility = TextView.VISIBLE
+                    btnDecrease.visibility = Button.VISIBLE
+                }
+                if (quantity==0 && itemQuantity.visibility==TextView.VISIBLE){
+                    itemQuantity.visibility = TextView.INVISIBLE
+                    btnDecrease.visibility = Button.INVISIBLE
                 }
                 val btnTambah = itemView.findViewById<Button>(R.id.btnTambah)
                 btnTambah.setOnClickListener {
                     if (quantity==0){
                         val cartItem = CartItem(menuData.name, menuData.price, 1)
                         viewModel.addItem(cartItem)
+                        updateCart(cartItem)
                         Toast.makeText(context, "${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
                         val itemQuantity = findViewById<TextView>(R.id.tvQuantity)
                         val btnDecrease = itemView.findViewById<Button>(R.id.btnKurang)
@@ -71,6 +92,7 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                     } else {
                         val cartItem = CartItem(menuData.name, menuData.price, quantity+1)
                         viewModel.updateItem(cartItem)
+                        updateCart(cartItem)
                         Toast.makeText(context, "More ${menuData.name} added to cart", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -79,10 +101,12 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                     if (quantity==1){
                         val cartItem = CartItem(menuData.name, menuData.price, quantity)
                         viewModel.removeItem(cartItem)
+                        updateCart(CartItem(menuData.name, menuData.price,0))
                         Toast.makeText(context, "${menuData.name} removed to cart", Toast.LENGTH_SHORT).show()
                     } else {
                         val cartItem = CartItem(menuData.name, menuData.price, quantity-1)
                         viewModel.updateItem(cartItem)
+                        updateCart(cartItem)
                         Toast.makeText(context, "More ${menuData.name} removed to cart", Toast.LENGTH_SHORT).show()
                     }
                 }

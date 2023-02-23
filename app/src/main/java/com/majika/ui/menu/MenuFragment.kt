@@ -11,6 +11,7 @@ import android.widget.SearchView.OnQueryTextListener
 import android.widget.TextView
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +37,7 @@ class MenuFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val list = ArrayList<ParentData>()
-
+    private lateinit var adapterMenu : ParentMenuAdapter
 
     var cartlist = ArrayList<CartItem>()
     private val viewModel: CartViewModel by lazy {
@@ -56,9 +57,7 @@ class MenuFragment : Fragment() {
             }
 
             override fun onQueryTextChange(msg: String): Boolean {
-                // inside on query text change method we are
-                // calling a method to filter our recycler view.
-                filter(msg)
+                filter(msg,viewLifecycleOwner)
                 return false
             }
         })
@@ -125,15 +124,28 @@ class MenuFragment : Fragment() {
             }
             override fun onFailure(call: Call<MenuResponse>, t: Throwable) {}
         })
-
         val rvParentMenu = binding.rvParentMenu
         rvParentMenu.setHasFixedSize(true)
         rvParentMenu.layoutManager = LinearLayoutManager(context)
-        rvParentMenu.adapter = ParentMenuAdapter(list, viewModel, context)
+        rvParentMenu.adapter = ParentMenuAdapter(list,viewModel,context,cartlist,viewLifecycleOwner)
+        adapterMenu = rvParentMenu.adapter as ParentMenuAdapter
+        viewModel.keranjang.observe(viewLifecycleOwner, object : Observer<List<CartItem>> {
+            override fun onChanged(t: List<CartItem>?) {
+                var Set = ArrayList<CartItem>()
+                for (i in t?.indices!!){
+                    val Add = CartItem(
+                        t[i].name, t[i].price, t[i].quantity
+                    )
+                    Set.add(Add)
+                }
+                Log.d("INFO", t.toString())
+                adapterMenu.updateCart(Set)
+            }
+        })
 
         return root
     }
-    private fun filter(text: String) {
+    private fun filter(text: String, viewLifeCyleOwner: LifecycleOwner) {
         // creating a new array list to filter our data.
         val filteredlist: ArrayList<ParentData> = ArrayList()
         filteredlist.clear()
@@ -162,7 +174,7 @@ class MenuFragment : Fragment() {
         val rvParentMenu = binding.rvParentMenu
         rvParentMenu.setHasFixedSize(true)
         rvParentMenu.layoutManager = LinearLayoutManager(context)
-        rvParentMenu.adapter = ParentMenuAdapter(filteredlist, viewModel, context)
+        rvParentMenu.adapter = ParentMenuAdapter(filteredlist, viewModel, context, cartlist, viewLifecycleOwner)
     }
     override fun onDestroyView() {
         super.onDestroyView()
