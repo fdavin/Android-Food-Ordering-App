@@ -104,7 +104,7 @@ class MenuFragment : Fragment() , SensorEventListener {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val searchView: SearchView = requireView().findViewById<SearchView>(R.id.SearchBar) as SearchView
+        val searchView: SearchView = binding.SearchBar
         searchView.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false

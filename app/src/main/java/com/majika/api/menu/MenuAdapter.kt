@@ -102,12 +102,12 @@ class MenuAdapter(private val data: ArrayList<MenuData>,private val viewModel: C
                         val cartItem = CartItem(menuData.name, menuData.price, quantity)
                         viewModel.removeItem(cartItem)
                         updateCart(CartItem(menuData.name, menuData.price,0))
-                        Toast.makeText(context, "${menuData.name} removed to cart", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "${menuData.name} removed from cart", Toast.LENGTH_SHORT).show()
                     } else {
                         val cartItem = CartItem(menuData.name, menuData.price, quantity-1)
                         viewModel.updateItem(cartItem)
                         updateCart(cartItem)
-                        Toast.makeText(context, "More ${menuData.name} removed to cart", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "1 ${menuData.name} removed from cart", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
