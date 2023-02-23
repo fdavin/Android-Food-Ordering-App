@@ -10,10 +10,12 @@
         android:id="@+id/previewView"
         android:layout_width="360dp"
         android:layout_height="360dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cameraShutter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/ivPreview"
@@ -43,7 +45,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_camera_shutter"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toBottomOf="@+id/previewView"
+        app:srcCompat="@drawable/baseline_camera_24"
+        app:tint="@color/red" />
+
+    <TextView
+        android:id="@+id/capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Capture"
+        android:textSize="24sp"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cameraShutter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

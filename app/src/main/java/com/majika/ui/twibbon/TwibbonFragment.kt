@@ -70,10 +70,11 @@ class TwibbonFragment : Fragment() {
         binding.ivPreview.setImageBitmap(bitmap)
         if (binding.ivPreview.visibility == View.VISIBLE) {
             binding.ivPreview.visibility = View.GONE
+            binding.capture.text = "Capture"
         } else {
             binding.ivPreview.visibility = View.VISIBLE
+            binding.capture.text = "Take Again?"
         }
-
     }
 
     private fun startCamera() {
