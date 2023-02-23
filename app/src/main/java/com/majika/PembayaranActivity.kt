@@ -1,5 +1,6 @@
 package com.majika
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,8 @@ import com.majika.ui.keranjang.CartViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class PembayaranActivity : AppCompatActivity() {
@@ -48,16 +51,20 @@ class PembayaranActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             statusView.text = responseBody.status
+                            if (responseBody.status == "SUCCESS") {
+                                Timer().schedule(5000) {
+                                    var i = Intent(this@PembayaranActivity, MainActivity::class.java)
+                                    startActivity(i)
+                                }
+                            }
                         } else {
                             statusView.text = "Error"
                         }
                     }
                     override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
-                        TODO("Not yet implemented")
                         statusView.text = "Error"
                     }
                 })
-//                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
