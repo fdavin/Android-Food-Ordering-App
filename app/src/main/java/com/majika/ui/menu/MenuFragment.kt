@@ -1,15 +1,18 @@
 package com.majika.ui.menu
 
 import android.app.ActionBar
+import android.content.Context
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.SearchView
+import android.widget.*
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.TextView
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -30,8 +33,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MenuFragment : Fragment() {
+class MenuFragment : Fragment() , SensorEventListener {
     private var _binding: FragmentMenuBinding? = null
+
+    private lateinit var sensorManager : SensorManager
+    private var tempSensor : Sensor? = null
+    private var temperature : Float = Float.NaN
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -48,6 +55,53 @@ class MenuFragment : Fragment() {
             .get(CartViewModel::class.java)
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        if (tempSensor == null){
+            Toast.makeText(context , "Temperature sensor is not available",
+                Toast.LENGTH_LONG).show()
+        }else{
+
+        }
+    }
+    private fun loadAmbientTemperature() {
+        sensorManager = activity?.getSystemService(AppCompatActivity.SENSOR_SERVICE) as SensorManager
+        val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        if (sensor != null) {
+            sensorManager.registerListener(this , sensor, SensorManager.SENSOR_DELAY_FASTEST)
+        } else {
+
+        }
+    }
+
+    override fun onSensorChanged(sensorEvent: SensorEvent) {
+        val temp_text: TextView = requireActivity().findViewById<TextView>(R.id.temperature)
+        if (sensorEvent.values.size > 0){
+            temperature = sensorEvent.values[0]
+            temp_text.text = "${temperature}°C"
+        }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (tempSensor!=null){
+            sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (tempSensor!=null){
+            sensorManager.unregisterListener(this, tempSensor)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchView: SearchView = requireView().findViewById<SearchView>(R.id.SearchBar) as SearchView
