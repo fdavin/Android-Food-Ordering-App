@@ -23,10 +23,6 @@ Majika is a mobile application that allows users to order food from Majika Resta
 * Portrait \
 ![Keranjang](screenshot/portrait_keranjang.png)
 
-### Pembayaran
-* Portrait \
-![Pembayaran](screenshot/portrait_pembayaran.png)
-
 ### Scan QR
 * Portrait \
 ![Scan QR](screenshot/portrait_pembayaran.jpg)
@@ -38,7 +34,7 @@ Majika is a mobile application that allows users to order food from Majika Resta
 *   13520025 Fransiskus Davin Anwari: 
     - [x] Menu
     - [x] Keranjang
-    - [x] Database
+    - [x] Room Database
     - [x] Temperature
 *   13520069 Kent Liusudarso: 
     - [x] Twibbon
