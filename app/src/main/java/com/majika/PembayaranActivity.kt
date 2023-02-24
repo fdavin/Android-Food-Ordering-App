@@ -3,6 +3,7 @@ package com.majika
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +45,9 @@ class PembayaranActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-                val statusView = findViewById<TextView>(R.id.status)
+                val status = findViewById<TextView>(R.id.status)
+                val status2 = findViewById<TextView>(R.id.status2)
+                val statusIcon = findViewById<ImageView>(R.id.statusIcon)
                 RetrofitClient.instance.checkPayment(it.text)
                     .enqueue(object : Callback<PaymentResponse> {
                         override fun onResponse(
@@ -53,8 +56,10 @@ class PembayaranActivity : AppCompatActivity() {
                         ) {
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                statusView.text = responseBody.status
                                 if (responseBody.status == "SUCCESS") {
+                                    status.text = "Berhasil"
+                                    status2.text = "Sudah dibayar"
+                                    statusIcon.setImageResource(R.drawable.baseline_check_circle_24)
                                     Timer().schedule(5000) {
                                         val i = Intent(
                                             this@PembayaranActivity,
@@ -62,14 +67,18 @@ class PembayaranActivity : AppCompatActivity() {
                                         )
                                         startActivity(i)
                                     }
+                                } else {
+                                    status.text = "Gagal"
+                                    status2.text = "Belum dibayar"
+                                    statusIcon.setImageResource(R.drawable.baseline_remove_circle_24)
                                 }
                             } else {
-                                statusView.text = "Error"
+                                status.text = "Invalid Code"
                             }
                         }
 
                         override fun onFailure(call: Call<PaymentResponse>, t: Throwable) {
-                            statusView.text = "Error"
+                            status.text = t.toString()
                         }
                     })
             }
