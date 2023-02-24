@@ -28,8 +28,8 @@
         android:padding="8dp"
         android:text="TOTAL UANG:"
         android:textSize="20sp"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
