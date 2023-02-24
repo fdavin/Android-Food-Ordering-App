@@ -59,7 +59,7 @@ class MenuAdapter(
     inner class MenuViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         fun bind(menuData: MenuData) {
             format.maximumFractionDigits = 0
-            format.currency = Currency.getInstance("IDR")
+            format.currency = Currency.getInstance(menuData.currency)
             with(itemView) {
                 val terjual: String = if (menuData.sold > 10000) {
                     "10RB+"
