@@ -8,9 +8,6 @@ class CartRepository(private val database: CartDatabase) {
     val keranjang = database.cartItemDao().getAll()
     val total = database.cartItemDao().getTotal()
 
-    //val keranjang1: LiveData<List<CartItem>> = Transformations.map(database.cartItemDao().getAll()) {
-    //    it.asDomainModel()
-    //}
     suspend fun addItem(item: CartItem) {
         withContext(Dispatchers.IO) {
             cartItemDao.insert(item)

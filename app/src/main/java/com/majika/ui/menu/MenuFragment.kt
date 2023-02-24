@@ -130,10 +130,6 @@ class MenuFragment : Fragment(), SensorEventListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        /*
-        val main: MainActivity = MainActivity()
-        val toolbar: Toolbar = main.findViewById(R.id.action_bar_layout) as Toolbar
-        main.setActionBar(toolbar)*/
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root

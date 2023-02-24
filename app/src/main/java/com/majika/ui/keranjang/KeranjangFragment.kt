@@ -36,13 +36,6 @@ class KeranjangFragment : Fragment() {
     private lateinit var model: CartViewModel
     private lateinit var adapter: CartAdapter
 
-    /*private val viewModel: CartViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        ViewModelProvider(this, CartViewModel.Factory(activity.application))
-            .get(CartViewModel::class.java)
-    }*/
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
