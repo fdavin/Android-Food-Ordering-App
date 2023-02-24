@@ -108,6 +108,7 @@ class PembayaranActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Pembayaran"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_ios_new_24)
     }
 
     override fun onSupportNavigateUp(): Boolean {

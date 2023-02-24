@@ -39,6 +39,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item>
         <!-- Customize your theme here. -->
+    </style>
+    <style name="ThemeOverlay.Actionbar" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface" >
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 </resources>
