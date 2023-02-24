@@ -8,6 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 import com.majika.ui.keranjang.CartViewModel
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CartAdapter(
     private val CartItems: ArrayList<CartItem> = ArrayList(),
@@ -16,6 +19,7 @@ class CartAdapter(
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     private var keranjang: ArrayList<CartItem>
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
     init {
         keranjang = CartItems
@@ -28,11 +32,13 @@ class CartAdapter(
 
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: CartItem) {
+            format.maximumFractionDigits = 0
+            format.currency = Currency.getInstance("IDR")
             with(itemView) {
                 val nameTextView: TextView = itemView.findViewById(R.id.tvCartItemName)
                 nameTextView.text = item.name
                 val priceTextView: TextView = itemView.findViewById(R.id.tvCartItemPrice)
-                priceTextView.text = "Rp ${item.price}"
+                priceTextView.text = "${format.format(item.price)}"
                 val quantityTextView: TextView = itemView.findViewById(R.id.tvCartItemQuantity)
                 quantityTextView.text = item.quantity.toString()
                 val addButton: Button = itemView.findViewById(R.id.btnIncreaseQuantity)

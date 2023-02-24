@@ -17,6 +17,7 @@ import com.majika.ui.keranjang.CartViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -24,6 +25,7 @@ import kotlin.concurrent.schedule
 class PembayaranActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
     private lateinit var model: CartViewModel
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,12 +98,14 @@ class PembayaranActivity : AppCompatActivity() {
             codeScanner.startPreview()
         }
         val total: TextView = findViewById(R.id.total)
+        format.maximumFractionDigits = 0
+        format.currency = Currency.getInstance("IDR")
         val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
             if (newTotal == null) {
-                total.text = "Total: Rp 0"
+                total.text = "Total: ${format.format(0)}"
             } else {
-                total.text = "Total: Rp ${newTotal}"
+                total.text = "Total: ${format.format(newTotal)}"
             }
         }
         model.total.observe(this, totalObserver)

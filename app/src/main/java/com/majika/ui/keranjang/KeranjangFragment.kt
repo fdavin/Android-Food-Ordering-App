@@ -19,6 +19,9 @@ import com.majika.R
 import com.majika.api.cart.CartAdapter
 import com.majika.api.cart.CartItem
 import com.majika.databinding.FragmentKeranjangBinding
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class KeranjangFragment : Fragment() {
@@ -35,7 +38,7 @@ class KeranjangFragment : Fragment() {
 
     private lateinit var model: CartViewModel
     private lateinit var adapter: CartAdapter
-
+    private val format: NumberFormat = NumberFormat.getCurrencyInstance()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,12 +80,14 @@ class KeranjangFragment : Fragment() {
             startActivity(i)
         }
         val total: TextView = requireView().findViewById(R.id.Total) as TextView
+        format.maximumFractionDigits = 0
+        format.currency = Currency.getInstance("IDR")
         val totalObserver = Observer<Int> { newTotal ->
             // Update the UI, in this case, a TextView.
             if (newTotal == null) {
-                total.text = "Total: Rp 0"
+                total.text = "Total: ${format.format(0)}"
             } else {
-                total.text = "Total: Rp ${newTotal}"
+                total.text = "Total: ${format.format(newTotal)}"
             }
         }
         model.total.observe(viewLifecycleOwner, totalObserver)

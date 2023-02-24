@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.majika.R
 import com.majika.api.cart.CartItem
 import com.majika.ui.keranjang.CartViewModel
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MenuAdapter(
     private val data: ArrayList<MenuData>,
@@ -19,6 +22,7 @@ class MenuAdapter(
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     private var keranjang: ArrayList<CartItem>
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
 
     init {
         keranjang = CartItems
@@ -54,16 +58,18 @@ class MenuAdapter(
 
     inner class MenuViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         fun bind(menuData: MenuData) {
+            format.maximumFractionDigits = 0
+            format.currency = Currency.getInstance("IDR")
             with(itemView) {
                 val terjual: String = if (menuData.sold > 10000) {
                     "10RB+"
                 } else if (menuData.sold >= 1000) {
-                    "${menuData.sold / 1000}RB"
+                    "${menuData.sold / 1000}RB+"
                 } else {
                     "${menuData.sold}"
                 }
                 val text = """
-                    Rp ${menuData.price}
+                    ${format.format(menuData.price)}
                     $terjual Terjual
                     
                     ${menuData.description}
