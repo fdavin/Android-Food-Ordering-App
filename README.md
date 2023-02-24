@@ -11,25 +11,32 @@ Majika is a mobile application that allows users to order food from Majika Resta
 ## Screenshots
 ### Menu
 * Portrait \
-![Menu](screenshot/portrait_menu.png)
+<img src="screenshot/portrait_menu.png" width="200" height="400" />
 * Landscape \
-![Menu](screenshot/landscape_menu.png)
+<img src="screenshot/landscape_menu.png" width="400" height="200" />
 
 ### Restoran
 * Portrait \
-![Restoran](screenshot/portrait_restoran.png)
+<img src="screenshot/portrait_restoran.png" width="200" height="400" />
 
 ### Keranjang
 * Portrait \
-![Keranjang](screenshot/portrait_keranjang.png)
+<img src="screenshot/portrait_keranjang.png" width="200" height="400" />
 
 ### Pembayaran
-* Portrait \
-![Pembayaran](screenshot/portrait_pembayaran.png)
+* Idle \
+<img src="screenshot/portrait_pembayaran_idle.jpg" width="200" height="400" />
+* Success \
+<img src="screenshot/portrait_pembayaran_success.jpg" width="200" height="400" />
+* Failed \
+<img src="screenshot/portrait_pembayaran_failed.jpg" width="200" height="400" />
 
-### Scan QR
-* Portrait \
-![Scan QR](screenshot/portrait_scan_qr.png)
+### Twibbon
+* Idle \
+<img src="screenshot/portrait_twibbon_idle.jpg" width="200" height="400" />
+* Take \
+<img src="screenshot/portrait_twibbon_take.jpg" width="200" height="400" />
+
 ## Workload
 *   13520025 Fransiskus Davin Anwari: 
     - [x] Menu
