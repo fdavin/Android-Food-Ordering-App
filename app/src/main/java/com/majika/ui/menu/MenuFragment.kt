@@ -14,7 +14,6 @@ import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -72,16 +71,6 @@ class MenuFragment : Fragment(), SensorEventListener {
             ).show()
         } else {
 
-        }
-    }
-
-    private fun loadAmbientTemperature() {
-        sensorManager =
-            activity?.getSystemService(AppCompatActivity.SENSOR_SERVICE) as SensorManager
-        val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-        if (sensor != null) {
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST)
-        } else {
         }
     }
 

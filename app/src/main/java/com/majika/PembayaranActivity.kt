@@ -1,6 +1,7 @@
 package com.majika
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +30,7 @@ class PembayaranActivity : AppCompatActivity() {
         val scannerView = findViewById<CodeScannerView>(R.id.scanner_view)
         model = ViewModelProvider(this).get(CartViewModel::class.java)
         codeScanner = CodeScanner(this, scannerView)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Parameters (default values)
         codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id

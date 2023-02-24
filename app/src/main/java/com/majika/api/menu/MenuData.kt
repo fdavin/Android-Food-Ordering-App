@@ -7,4 +7,4 @@ data class MenuData(
     val price: Int,
     val sold: Int,
     val type: String
-)
+) : java.io.Serializable

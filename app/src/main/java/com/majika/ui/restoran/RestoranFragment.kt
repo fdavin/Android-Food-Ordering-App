@@ -35,11 +35,6 @@ class RestoranFragment : Fragment() {
         _binding = FragmentRestoranBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
-        toolbar.title = "Restoran"
-        val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.GONE
-
         val rvBranch = binding.rvBranch
         rvBranch.setHasFixedSize(true)
         rvBranch.layoutManager = LinearLayoutManager(context)
@@ -66,6 +61,14 @@ class RestoranFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Restoran"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.GONE
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

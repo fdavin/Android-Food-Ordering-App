@@ -40,11 +40,6 @@ class TwibbonFragment : Fragment() {
     ): View {
         _binding = FragmentTwibbonBinding.inflate(inflater, container, false)
 
-        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
-        toolbar.title = "Twibbon"
-        val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.GONE
-
         return binding.root
     }
 
@@ -75,6 +70,14 @@ class TwibbonFragment : Fragment() {
             binding.ivPreview.visibility = View.VISIBLE
             binding.capture.text = "Take Again?"
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Twibbon"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.GONE
     }
 
     private fun startCamera() {

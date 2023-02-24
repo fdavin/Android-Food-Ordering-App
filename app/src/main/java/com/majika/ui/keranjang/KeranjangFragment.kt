@@ -51,11 +51,6 @@ class KeranjangFragment : Fragment() {
         _binding = FragmentKeranjangBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
-        toolbar.title = "Keranjang"
-        val temp: TextView = requireActivity().findViewById(R.id.temp)
-        temp.visibility = TextView.GONE
-
         model = ViewModelProvider(this).get(CartViewModel::class.java)
         adapter = CartAdapter(list, model)
 
@@ -103,5 +98,14 @@ class KeranjangFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val toolbar: MaterialToolbar = requireActivity().findViewById(R.id.topAppBar)
+        toolbar.title = "Keranjang"
+        val temp: TextView = requireActivity().findViewById(R.id.temp)
+        temp.visibility = TextView.GONE
     }
 }
